@@ -1,24 +1,33 @@
 #include <iostream>
 
 using namespace std;
-
+//rows and columns
 int row;
 int column;
-
+//bool for now if there're winner
 bool noWinner = true;
+
+//check of a player made a move
 bool timeOf = true;
 
+//player
 char player;
+
+//board
 char board[][3] = {
                         {'_','_','_'},
                         {'_','_','_'},
                         {'_','_','_'}
                     };
 
+
+//void to create the board and show the board
 void createBoard()
 {
+    //check which player'll play
     player = timeOf ? 'X' : '0';
 
+    //loop for draw the board
     for (int i = 0; i < 3 ; ++i)
     {
         for (int j = 0; j < 3; ++j)
@@ -29,9 +38,11 @@ void createBoard()
         cout << endl;
     }
 }
+
+//bool check if are a winner
 bool checkWinner ()
 {
-    //Check horizontal and vertical
+    //Check horizontal
     for (int i = 0; i < 3; ++i)
     {
         if  (board[i][0] != '_' && board[i][0] == board[i][1] && board[i][1] == board[i][2])
@@ -39,6 +50,7 @@ bool checkWinner ()
             return true;
         }
 
+        //check vertical
         else if  (board[0][i] != '_' && board[0][i] == board[1][i] && board[1][i] == board[2][i])
         {
             return true;
@@ -60,6 +72,7 @@ bool checkWinner ()
     return false;
 }
 
+//check the board for now if there're a tie
 bool checkDraw ()
 {
     for (int i = 0; i < 3 ; ++i)
@@ -76,14 +89,20 @@ bool checkDraw ()
     return true;
 }
 
+//move of the player
 char play (int row, int column)
 {
+    //make the move of the player (replace the character with the character of the player)
     board[row][column] = player;
 
+    //change the player
     timeOf = !timeOf;
 
+    //bool for now if there're a winner
     bool winner = checkWinner();
+    //check if there're a tie
     bool draw = checkDraw();
+
     if (winner)
     {
         cout << "El ganador es el jugador: " << player << endl;
@@ -99,6 +118,7 @@ char play (int row, int column)
     }
 }
 
+//check if the move of the user is valid
 bool checkMove(int row, int column)
 {
     if(board[row][column] == '_')
@@ -109,6 +129,7 @@ bool checkMove(int row, int column)
     return true;
 }
 
+//void for the use made a move
 void makeMove()
 {
     cout << "Es el turno de " << player << endl;
@@ -121,8 +142,8 @@ void makeMove()
 
     cout << endl;
 
+    //check if the move is valid
     bool ok = checkMove(row, column);
-
 
     if (!ok)
     {
@@ -134,6 +155,7 @@ void makeMove()
         cout << "Debes jugar en otra posicion!, esa posicion esta ocupada!" << endl;
     }
 }
+
 int main()
 {
     while(noWinner)
